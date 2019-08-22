@@ -5,10 +5,6 @@ n_base = int(input("Digite a base do número: "))
 
 base2 = []
 
-verif = True
-
-i = 0
-
 if n_base == 10:
     # DECIMAL PARA BINÁRIO
     div = n
