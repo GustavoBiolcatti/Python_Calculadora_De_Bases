@@ -30,8 +30,6 @@ if n_base == 10:
             base2.append(math.trunc(div))
             base2 = base2[::-1]
             break
-
-    
     
     # DECIMAL PARA OCTAL
     div = n
