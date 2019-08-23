@@ -8,7 +8,7 @@ base8 = []
 base10 = []
 base16 = []
 
-letra_base16 = {10: "A",
+letra_base16 = {9: 9, 10: "A",
                 11: "B",
                 12: "C",
                 13: "D",
@@ -27,10 +27,11 @@ if n_base == 10:
             
             div = div / 2
         else:
+            base2.append(math.trunc(div))
+            base2 = base2[::-1]
             break
 
-    base2.append(math.trunc(div))
-    base2 = base2[::-1]
+    
     
     # DECIMAL PARA OCTAL
     div = n
@@ -41,10 +42,9 @@ if n_base == 10:
             
             div = div / 8
         else:
+            base8.append(math.trunc(div))
+            base8 = base8[::-1]
             break
-
-    base8.append(math.trunc(div))
-    base8 = base8[::-1]
     
     # DECIMAL PARA HEXADECIMAL
     div = n
@@ -58,14 +58,13 @@ if n_base == 10:
             
             div = div / 16
         else:
+            if div < 10:
+                base16.append(math.trunc(div))
+            else:
+                base16.append(letra_base16[math.trunc(div)])
+            
+            base16 = base16[::-1]
             break
-
-    if resto < 10:
-        base16.append(math.trunc(div))
-    else:
-        base16.append(letra_base16[math.trunc(div)])
-    
-    base16 = base16[::-1]
     
     print("BASE 2:  ", base2)
     print("BASE 8:  ", base8)
