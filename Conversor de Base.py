@@ -5,6 +5,7 @@ n_base = 10 # n_base = int(input("Digite a base do número: "))
 
 base2 = []
 base8 = []
+base10 = []
 base16 = []
 
 letra_base16 = {10: "A",
@@ -13,6 +14,8 @@ letra_base16 = {10: "A",
                 13: "D",
                 14: "E",
                 15: "F"}
+
+# =========================================================================== #
 
 if n_base == 10:
     # DECIMAL PARA BINÁRIO
@@ -51,7 +54,7 @@ if n_base == 10:
             if resto < 10:
                 base16.append(math.trunc(resto))
             else:
-                base16.append(letra_base16[resto])
+                base16.append(letra_base16[math.trunc(resto)])
             
             div = div / 16
         else:
@@ -60,10 +63,10 @@ if n_base == 10:
     if resto < 10:
         base16.append(math.trunc(div))
     else:
-        base16.append(letra_base16[div])
+        base16.append(letra_base16[math.trunc(div)])
     
     base16 = base16[::-1]
     
-    print("BASE 2: ", base2)
-    print("BASE 8: ", base8)
+    print("BASE 2:  ", base2)
+    print("BASE 8:  ", base8)
     print("BASE 16: ", base16)
