@@ -1,14 +1,25 @@
 import math
 
-n = input("Digite o número a ser convertido: ").upper()
-n_base = 16 # n_base = int(input("Digite a base do número: "))
+n = input("Digite o número a ser convertido: ").upper().replace(",", ".")
+n_base = 10 # n_base = int(input("Digite a base do número: "))
 
 i = 0
+
+int_base2 = []
+dec_base2 = []
+
+'''int_base8 = []
+dec_base8 = []
+
+int_base16 = []
+dec_base16 = []'''
 
 base2 = []
 base8 = []
 base10 = 0
 base16 = []
+
+verif_rep = []
 
 letra_base16 = {10: "A",
                 11: "B",
@@ -21,7 +32,7 @@ letra_base16 = {10: "A",
                 "C": 12,
                 "D": 13,
                 "E": 14,
-                "F": 15,}
+                "F": 15}
 
 # +=========================================================================+ #
 # |                                  DECIMAL                                | #
@@ -30,52 +41,100 @@ letra_base16 = {10: "A",
 if n_base == 10:
     
     # DECIMAL PARA BINÁRIO
-    val = int(n)
-    while True:
-        if val >= 2:
-            resto = val % 2
-            base2.append(math.trunc(resto))
-            
-            val = val / 2
-        else:
-            base2.append(math.trunc(val))
-            base2 = base2[::-1]
-            break
-    
-    
-    # DECIMAL PARA OCTAL
-    val = int(n)
-    while True:
-        if val >= 8:
-            resto = val % 8
-            base8.append(math.trunc(resto))
-            
-            val = val / 8
-        else:
-            base8.append(math.trunc(val))
-            base8 = base8[::-1]
-            break
-    
-    
-    # DECIMAL PARA HEXADECIMAL
-    val = int(n)
-    while True:
-        if val >= 16:
-            resto = val % 16
-            if resto < 10:
-                base16.append(math.trunc(resto))
+    # converte um 'float'
+    if "." in n:
+        intr = int(n.split(".")[0])
+        dec = int(n.split(".")[1]) / 10**len(n.split(".")[1])
+        
+        # cálculo da parte inteira - antes da vírgula
+        while True:
+            if intr >= 2:
+                resto = intr % 2
+                int_base2.append(math.trunc(resto))
+                
+                intr = intr / 2
             else:
-                base16.append(letra_base16[math.trunc(resto)])
+                int_base2.append(math.trunc(intr))
+                int_base2 = int_base2[::-1]
+                break
+        
+        # cálculo da parte decimal - depois da vírgula
+        while dec > 0:
+            dec = dec * 2
             
-            val = val / 16
-        else:
-            if val < 10:
-                base16.append(math.trunc(val))
+            if len(verif_rep) > 4:
+                verif_rep.clear()
             else:
-                base16.append(letra_base16[math.trunc(val)])
+                verif_rep.append(int(str(dec)[0]))
             
-            base16 = base16[::-1]
-            break
+            dec_base2.append(int(str(dec)[0]))
+            
+            if dec >= 1:
+                dec -= 1
+        
+        # organiza o vetor de exibição - base2
+        for i in int_base2:
+            base2.append(i)
+        
+        if base2 is None:
+            base2.append(0)
+        
+        base2.append(".")
+        
+        for i in dec_base2:
+            base2.append(i)
+        
+    
+    # converte um inteiro
+    else:
+        val = int(n)
+        while True:
+            if val >= 2:
+                resto = val % 2
+                base2.append(math.trunc(resto))
+                
+                val = val / 2
+            else:
+                base2.append(math.trunc(val))
+                base2 = base2[::-1]
+                break
+    
+        
+        # ------------------------------------------------------------------- #
+        # DECIMAL PARA OCTAL
+        val = int(n)
+        while True:
+            if val >= 8:
+                resto = val % 8
+                base8.append(math.trunc(resto))
+                
+                val = val / 8
+            else:
+                base8.append(math.trunc(val))
+                base8 = base8[::-1]
+                break
+        
+        
+        # ------------------------------------------------------------------- #
+        # DECIMAL PARA HEXADECIMAL
+        val = int(n)
+        while True:
+            if val >= 16:
+                resto = val % 16
+                if resto < 10:
+                    base16.append(math.trunc(resto))
+                else:
+                    base16.append(letra_base16[math.trunc(resto)])
+                
+                val = val / 16
+            else:
+                if val < 10:
+                    base16.append(math.trunc(val))
+                else:
+                    base16.append(letra_base16[math.trunc(val)])
+                
+                base16 = base16[::-1]
+                break
     
     print("\nBASE 2:  ", *base2, sep="")
     print("BASE 8:  ", *base8, sep="")
@@ -106,7 +165,8 @@ elif n_base == 8:
     while base2[0] == 0:
         base2.remove(0)
 
-
+    
+    # ----------------------------------------------------------------------- #
     # OCTAL PARA DECIMAL
     val = n
     i = 0
@@ -144,6 +204,7 @@ elif n_base == 16:
         base2.remove(0)
     
     
+    # ----------------------------------------------------------------------- #
     # HEXADECIMAL PARA DECIMAL
     val = list(n)
     i = 0
