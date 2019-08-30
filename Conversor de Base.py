@@ -82,39 +82,45 @@ def converteBase2(num, num_base):
     elif  num_base == 8:
         val = n
         
-        for num in val:
-            i = 2
-            while i >= 0:
-                num = int(num)
-                if (num - 2**i) >= 0:
-                    num = num - 2**i
-                    base2.append(1)
-                else:
-                    base2.append(0)
-                    
-                i -= 1
+        if "." in num:
+            pass
+        else:
+            for num in val:
+                i = 2
+                while i >= 0:
+                    num = int(num)
+                    if (num - 2**i) >= 0:
+                        num = num - 2**i
+                        base2.append(1)
+                    else:
+                        base2.append(0)
+                        
+                    i -= 1
     
     elif num_base == 16:
         val = list(n)
         n_val = []
         
-        for i in range(0, len(val), 1): # substitui as letras por número
-            if not val[i].isnumeric():
-                n_val.append(letra[val[i]])
-            else:
-                n_val.append(val[i])
-        
-        for num in n_val:
-            i = 3
-            while i >= 0:
-                num = int(num)
-                if (num - 2**i) >= 0:
-                    num = num - 2**i
-                    base2.append(1)
+        if "." in num:
+            pass
+        else:
+            for i in range(0, len(val), 1): # substitui as letras por número
+                if not val[i].isnumeric():
+                    n_val.append(letra[val[i]])
                 else:
-                    base2.append(0)
-                    
-                i -= 1
+                    n_val.append(val[i])
+            
+            for num in n_val:
+                i = 3
+                while i >= 0:
+                    num = int(num)
+                    if (num - 2**i) >= 0:
+                        num = num - 2**i
+                        base2.append(1)
+                    else:
+                        base2.append(0)
+                        
+                    i -= 1
     
     return removeZero(base2)
 
@@ -125,23 +131,29 @@ def converteBase10(num, num_base):
         val = n
         i = 0
         
-        for num in val[::-1]:
-            base10 += int(num) * (8**i)
-            i += 1
+        if "." in num:
+            pass
+        else:
+            for num in val[::-1]:
+                base10 += int(num) * (8**i)
+                i += 1
     
     elif num_base == 16:
         val = list(n)
         i = 0
         
-        for num in val[::-1]:
-            if num.isnumeric():
-                num = int(num)
-            else:
-                num = letra[num]
-            
-            base10 += int(num) * (16**i)
-            i += 1
-        
+        if "." in num:
+            pass
+        else:
+            for num in val[::-1]:
+                if num.isnumeric():
+                    num = int(num)
+                else:
+                    num = letra[num]
+                
+                base10 += int(num) * (16**i)
+                i += 1
+
     return base10
 
 def converteBase8(num, num_base):
