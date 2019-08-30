@@ -5,52 +5,22 @@ n_base = int(input("Digite a base do número: "))
 
 print("\n")
 
-# --------------------------- VARIÁVEIS -----------------------
-
-base8 = []
-base16 = []
-
 letra = {10: "A", 11: "B", 12: "C", 13: "D", 14: "E", 15: "F", 16: "G", 17: "H", 18: "I", 19: "J", 20: "K",
          "A": 10, "B": 11, "C": 12, "D": 13, "E": 14, "F": 15, "G": 16, "H": 17, "I": 18, "J": 19, "K": 20}
 
 # --------------------------- FUNÇÕES --------------------------
-def removeZero(base2):
-    while base2[0] == 0:
-        base2.remove(0) # se houver, remove os números '0' do começo do binário
-    
-    return base2
 
-def converteBase10(num, num_base):
-    base10 = 0
+def removeZero(lista):
+    while lista[0] == 0:
+        lista.remove(0) # se houver, remove os números '0' do começo do binário
     
-    if num_base == 8:
-        val = n
-        i = 0
-        
-        for num in val[::-1]:
-            base10 += int(num) * (8**i)
-            i += 1
-    
-    elif num_base == 16:
-        val = list(n)
-        i = 0
-        
-        for num in val[::-1]:
-            if num.isnumeric():
-                num = int(num)
-            else:
-                num = letra[num]
-            
-            base10 += int(num) * (16**i)
-            i += 1
-        
-    return base10
+    return lista
 
 def converteBase2(num, num_base):
     base2 = []
     
     if num_base == 10:
-        if "." in n:# converte um 'float'
+        if "." in n: # converte um 'float'
             int_base2 = []
             dec_base2 = []
             
@@ -148,14 +118,43 @@ def converteBase2(num, num_base):
     
     return removeZero(base2)
 
-# +=========================================================================+ #
-# |                                  DECIMAL                                | #
-# +=========================================================================+ #
+def converteBase10(num, num_base):
+    base10 = 0
+    
+    if num_base == 8:
+        val = n
+        i = 0
+        
+        for num in val[::-1]:
+            base10 += int(num) * (8**i)
+            i += 1
+    
+    elif num_base == 16:
+        val = list(n)
+        i = 0
+        
+        for num in val[::-1]:
+            if num.isnumeric():
+                num = int(num)
+            else:
+                num = letra[num]
+            
+            base10 += int(num) * (16**i)
+            i += 1
+        
+    return base10
 
-if n_base == 10:
-    if "." not in n:
-        # DECIMAL PARA OCTAL
-        val = int(n)
+def converteBase8(num, num_base):
+    base8 = []
+    
+    if "." in num:
+        pass
+    else:
+        if num_base != 10:
+            val = converteBase10(num, num_base)
+        else:
+            val = int(num)
+            
         while True:
             if val >= 8:
                 resto = val % 8
@@ -167,8 +166,19 @@ if n_base == 10:
                 base8 = base8[::-1]
                 break
         
-        # DECIMAL PARA HEXADECIMAL
-        val = int(n)
+    return base8
+
+def converteBase16(num, num_base):
+    base16 = []
+    
+    if "." in num:
+        pass
+    else:
+        if num_base != 10:
+            val = converteBase10(num, num_base)
+        else:
+            val = int(num)
+        
         while True:
             if val >= 16:
                 resto = val % 16
@@ -186,10 +196,18 @@ if n_base == 10:
                 
                 base16 = base16[::-1]
                 break
-        
+    
+    return base16
+
+# +=========================================================================+ #
+# |                                  DECIMAL                                | #
+# +=========================================================================+ #
+
+if n_base == 10:
     print("BASE 2:  ", *converteBase2(n, 10), sep="")
-    print("BASE 8:  ", *base8, sep="")
-    print("BASE 16: ", *base16, sep="")
+    print("BASE 8:  ", *converteBase8(n, 10), sep="")
+    print("BASE 10:", n)
+    print("BASE 16: ", *converteBase16(n, 10), sep="")
     
 # +=========================================================================+ #
 # |                                  OCTAL                                  | #
@@ -197,8 +215,9 @@ if n_base == 10:
     
 elif n_base == 8:
     print("BASE 2:  ", *converteBase2(n, 8), sep="")
-    print("BASE 10: ", converteBase10(n, 8))
-    print("BASE 16: ")
+    print("BASE 8: ", n)
+    print("BASE 10:", converteBase10(n, 8))
+    print("BASE 16: ", *converteBase16(n, 8), sep="")
     
 # +=========================================================================+ #
 # |                                HEXACIMAL                                | #
@@ -206,5 +225,6 @@ elif n_base == 8:
     
 elif n_base == 16:
     print("BASE 2:  ", *converteBase2(n, 16), sep="")
-    print("BASE 8:  ")
+    print("BASE 8:  ", *converteBase8(n, 10), sep="")
     print("BASE 10:", converteBase10(n, 16))
+    print("BASE 16:", n)
