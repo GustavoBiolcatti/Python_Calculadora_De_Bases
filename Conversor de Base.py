@@ -2,7 +2,7 @@ import math
 
 while True:
     print("\n")
-    print("\033[1;30m=\033[0;0m"*51)
+    print("\033[1;30m-\033[0;0m"*51)
     print("   *** DEIXE VAZIO CASO NÃO DESEJE CONTINUAR ***")
     
     n = input("Digite o número a ser convertido: ").upper().replace(",", ".").strip()
@@ -13,11 +13,10 @@ while True:
     
     print("\n")
     
-    letra_geral = {10: "A", 11: "B", 12: "C", 13: "D", 14: "E", 15: "F", 16: "G", 17: "H", 18: "I", 19: "J", 20: "K",
+    letra = {10: "A", 11: "B", 12: "C", 13: "D", 14: "E", 15: "F", 16: "G", 17: "H", 18: "I", 19: "J", 20: "K",
                    "A": 10, "B": 11, "C": 12, "D": 13, "E": 14, "F": 15, "G": 16, "H": 17, "I": 18, "J": 19, "K": 20}
     
-    letra16 = {10: "A", 11: "B", 12: "C", 13: "D", 14: "E", 15: "F",
-               "A": 10, "B": 11, "C": 12, "D": 13, "E": 14, "F": 15}
+    letraFora16 = ["G", "H", "I", "J", "K", "L", "M", "O", "N", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
     
     # +=========================================================================+ #
     # |                                  FUNÇÕES                                | #
@@ -120,7 +119,7 @@ while True:
             else:
                 for i in range(0, len(val), 1): # substitui as letras por número
                     if not val[i].isnumeric():
-                        n_val.append(letra16[val[i]])
+                        n_val.append(letra[val[i]])
                     else:
                         n_val.append(val[i])
                 
@@ -175,7 +174,7 @@ while True:
                     if num.isnumeric():
                         num = int(num)
                     else:
-                        num = letra16[num]
+                        num = letra[num]
                     
                     base10 += int(num) * (16**i)
                     i += 1
@@ -225,14 +224,14 @@ while True:
                     if resto < 10:
                         base16.append(math.trunc(resto))
                     else:
-                        base16.append(letra16[math.trunc(resto)])
+                        base16.append(letra[math.trunc(resto)])
                     
                     val = val / 16
                 else:
                     if val < 10:
                         base16.append(math.trunc(val))
                     else:
-                        base16.append(letra16[math.trunc(val)])
+                        base16.append(letra[math.trunc(val)])
                     
                     base16 = base16[::-1]
                     break
@@ -262,6 +261,16 @@ while True:
         print("BASE 16: ", *converteBase16(n, n_base), sep="")
              
     elif n_base == 16:
+        
+        for i in n:
+            if i in letraFora16:
+                print("O valor não corresponde à base hexadecimal".format(i))
+                verif_valorBase = False
+                break
+        
+        if verif_valorBase == False:
+            break
+                
         print("BASE 2:  ", *converteBase2(n, n_base), sep="")
         print("BASE 8:  ", *converteBase8(n, n_base), sep="")
         print("BASE 10:", converteBase10(n, n_base))
