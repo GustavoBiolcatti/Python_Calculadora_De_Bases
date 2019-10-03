@@ -147,7 +147,7 @@ class Application:
         # ===================================================================
 
     def converteValor(self):
-        n = str(self.entryNum.get()).upper().strip()
+        n = str(self.entryNum.get()).upper().strip().replace(",", ".")
         base = int(self.comboBase.get())
 
         if base not in [2, 8, 10, 16]:
@@ -168,5 +168,6 @@ class Application:
 
 
 root = Tk()
+root.title("CONVERSOR DE BASE")
 Application(root)
 root.mainloop()
