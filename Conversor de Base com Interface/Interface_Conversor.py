@@ -169,5 +169,6 @@ class Application:
 
 root = Tk()
 root.title("CONVERSOR DE BASE")
+root.resizable(False, False)
 Application(root)
 root.mainloop()
