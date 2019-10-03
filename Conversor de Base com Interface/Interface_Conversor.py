@@ -147,24 +147,27 @@ class Application:
         # ===================================================================
 
     def converteValor(self):
-        n = str(self.entryNum.get()).upper().strip().replace(",", ".")
-        base = int(self.comboBase.get())
-
-        if base not in [2, 8, 10, 16]:
-            operacoes.mBox(self, "Erro de parâmetro", "A base selecionada não está entre as opções.", 1)
+        if str(self.entryNum.get()).strip() == "":
+            pass
         else:
-            if operacoes.verificaValor(self, n=n, num_base=base) != False:
-                self.entryDec.delete(0, 'end')
-                self.entryDec.insert(0, operacoes.converteBase10(self, n=n, num=n, num_base=base))
+            n = str(self.entryNum.get()).upper().strip().replace(",", ".")
+            base = int(self.comboBase.get())
 
-                self.entryBin.delete(0, 'end')
-                self.entryBin.insert(0, operacoes.converteBase2(self, n=n, num=n, num_base=base))
+            if base not in [2, 8, 10, 16]:
+                operacoes.mBox(self, "Erro de parâmetro", "A base selecionada não está entre as opções.", 1)
+            else:
+                if operacoes.verificaValor(self, n=n, num_base=base) != False:
+                    self.entryDec.delete(0, 'end')
+                    self.entryDec.insert(0, operacoes.converteBase10(self, n=n, num=n, num_base=base))
 
-                self.entryOct.delete(0, 'end')
-                self.entryOct.insert(0, operacoes.converteBase8(self, num=n, num_base=base))
+                    self.entryBin.delete(0, 'end')
+                    self.entryBin.insert(0, operacoes.converteBase2(self, n=n, num=n, num_base=base))
 
-                self.entryHex.delete(0, 'end')
-                self.entryHex.insert(0, operacoes.converteBase16(self, num=n, num_base=base))
+                    self.entryOct.delete(0, 'end')
+                    self.entryOct.insert(0, operacoes.converteBase8(self, num=n, num_base=base))
+
+                    self.entryHex.delete(0, 'end')
+                    self.entryHex.insert(0, operacoes.converteBase16(self, num=n, num_base=base))
 
 
 root = Tk()
