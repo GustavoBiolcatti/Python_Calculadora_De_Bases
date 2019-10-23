@@ -13,9 +13,9 @@ class operacoes(object):
         return ctypes.windll.user32.MessageBoxW(0, text, title, style)
 
     def verificaValor(self, n, num_base):
-        b2 = "01"
+        b2 = ".01"
         b8 = "01234567"
-        b10 = "0123456789"
+        b10 = ".0123456789"
         b16 = "0123456789ABCDEF"
 
         if num_base == 2:
